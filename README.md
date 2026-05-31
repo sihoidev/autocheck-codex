@@ -1,7 +1,7 @@
 # GitHub Actions Auto Check-in
 
-This repository contains a GitHub Actions workflow for bilibili daily tasks
-and the V2EX daily mission reward.
+This repository contains a GitHub Actions workflow for bilibili daily tasks,
+the V2EX daily mission reward, and Railgun check-in.
 
 ## Usage
 
@@ -10,6 +10,11 @@ and the V2EX daily mission reward.
 3. Add these Repository secrets:
    - `BILIBILI_COOKIE`: the full Cookie header from a logged-in bilibili request.
    - `V2EX_COOKIE`: the full Cookie header from a logged-in V2EX request.
+   - `RAILGUN_COOKIE`: the full Cookie header from a logged-in Railgun request.
+     Multiple Railgun accounts can be added as multiple lines in this secret.
+   - `RAILGUN_BASE_URL`: optional, defaults to `https://railgun.info`.
+   - `RAILGUN_TOKEN`: optional, defaults to `railgun.info`.
+   - `GLADOS`, `GLADOS_COOKIE`: legacy aliases for `RAILGUN_COOKIE`.
    - `TG_BOT_TOKEN`: the token from BotFather.
    - `TG_CHANNEL_ID`: the channel ID or `@channel_username` that receives the
      Telegram message.
@@ -39,8 +44,12 @@ want a different time.
 - V2EX checks the daily mission page, redeems the daily reward when available,
   then reads `/balance` to report the reward amount, current total balance, and
   latest balance record.
-- Telegram notifications are sent separately for each service, so Bilibili and
-  V2EX have independent message titles and details.
+- Railgun uses `https://railgun.info` by default and calls `/api/user/checkin`,
+  `/api/user/status`, and `/api/user/traffic`. Notifications include sign-in
+  result, remaining days, plan level, and traffic details when the API returns
+  recognizable fields.
+- Telegram notifications are sent separately for each service, so Bilibili,
+  V2EX, and Railgun have independent message titles and details.
 
 ## Script layout
 
@@ -48,5 +57,6 @@ want a different time.
 - `scripts/bilibili.py`: Bilibili login, watch, share, coin, live sign-in, and
   manga sign-in tasks.
 - `scripts/v2ex.py`: V2EX daily mission and balance parsing.
+- `scripts/railgun.py`: Railgun check-in, remaining days, and traffic parsing.
 - `scripts/notify.py`: Telegram notification sending.
 - `scripts/common.py`: shared result model and HTTP defaults.
