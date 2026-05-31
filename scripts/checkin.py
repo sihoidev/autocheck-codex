@@ -6,6 +6,7 @@ import sys
 from bilibili import check_bilibili
 from common import CheckinResult
 from notify import send_telegram_notification
+from railgun import RAILGUN_BASE_URL, RAILGUN_DEFAULT_TOKEN, check_railgun
 from v2ex import check_v2ex
 
 
@@ -21,6 +22,13 @@ def main() -> int:
     checks = [
         check_bilibili(env.get("BILIBILI_COOKIE", "").strip()),
         check_v2ex(env.get("V2EX_COOKIE", "").strip()),
+        check_railgun(
+            env.get("RAILGUN_COOKIE", "").strip()
+            or env.get("GLADOS_COOKIE", "").strip()
+            or env.get("GLADOS", "").strip(),
+            env.get("RAILGUN_BASE_URL", RAILGUN_BASE_URL).strip() or RAILGUN_BASE_URL,
+            env.get("RAILGUN_TOKEN", RAILGUN_DEFAULT_TOKEN).strip() or RAILGUN_DEFAULT_TOKEN,
+        ),
     ]
 
     failed = False
