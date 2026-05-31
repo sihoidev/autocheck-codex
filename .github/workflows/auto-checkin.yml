@@ -26,6 +26,11 @@ jobs:
         env:
           BILIBILI_COOKIE: ${{ secrets.BILIBILI_COOKIE }}
           V2EX_COOKIE: ${{ secrets.V2EX_COOKIE }}
+          RAILGUN_COOKIE: ${{ secrets.RAILGUN_COOKIE }}
+          GLADOS_COOKIE: ${{ secrets.GLADOS_COOKIE }}
+          GLADOS: ${{ secrets.GLADOS }}
+          RAILGUN_BASE_URL: ${{ secrets.RAILGUN_BASE_URL }}
+          RAILGUN_TOKEN: ${{ secrets.RAILGUN_TOKEN }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           TG_CHANNEL_ID: ${{ secrets.TG_CHANNEL_ID }}
