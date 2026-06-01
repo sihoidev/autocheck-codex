@@ -78,6 +78,16 @@ def parse_balance(html: str) -> V2EXBalance:
     return fallback
 
 
+def balance_is_today(balance: V2EXBalance) -> bool:
+    today = today_yyyymmdd()
+    occurred_date = balance.occurred_at.replace("-", "")
+    return today in balance.description or occurred_date.startswith(today)
+
+
+def mission_is_completed(html: str) -> bool:
+    return parse_redeem_path(html) == "/balance"
+
+
 class V2EXTask:
     def __init__(self, cookie: str) -> None:
         self.session = requests.Session()
@@ -128,7 +138,15 @@ def check_v2ex(cookie: str) -> CheckinResult:
             mission_status = "今日已领取"
         elif redeem_path:
             task.redeem(redeem_path)
-            mission_status = "领取成功"
+            verify_html, _ = task.mission_page()
+            if not mission_is_completed(verify_html):
+                return CheckinResult(
+                    "V2EX",
+                    False,
+                    "领取后未验证到已完成状态",
+                    details=details,
+                )
+            mission_status = "领取成功并已验证"
         else:
             return CheckinResult("V2EX", False, "未找到领取按钮或余额入口")
 
@@ -145,5 +163,13 @@ def check_v2ex(cookie: str) -> CheckinResult:
         details.append(f"余额记录: {balance.description}")
     if balance.occurred_at:
         details.append(f"记录时间: {balance.occurred_at}")
+
+    if not balance_is_today(balance):
+        return CheckinResult(
+            "V2EX",
+            False,
+            "余额页未找到今日签到奖励记录",
+            details=details,
+        )
 
     return CheckinResult("V2EX", True, mission_status, details=details)
