@@ -3,6 +3,8 @@
 This repository contains a GitHub Actions workflow for bilibili daily tasks,
 the V2EX daily mission reward, and Railgun check-in.
 
+hello
+
 ## Usage
 
 1. Push these files to a GitHub repository.
