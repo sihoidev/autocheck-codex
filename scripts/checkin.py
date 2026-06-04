@@ -5,6 +5,7 @@ import sys
 
 from bilibili import check_bilibili
 from common import CheckinResult
+from fnnas import check_fnnas
 from notify import send_telegram_notification
 from railgun import RAILGUN_BASE_URL, RAILGUN_DEFAULT_TOKEN, check_railgun
 from v2ex import check_v2ex
@@ -29,6 +30,7 @@ def main() -> int:
             env.get("RAILGUN_BASE_URL", RAILGUN_BASE_URL).strip() or RAILGUN_BASE_URL,
             env.get("RAILGUN_TOKEN", RAILGUN_DEFAULT_TOKEN).strip() or RAILGUN_DEFAULT_TOKEN,
         ),
+        check_fnnas(env.get("FNNAS_COOKIE", "").strip()),
     ]
 
     failed = False
