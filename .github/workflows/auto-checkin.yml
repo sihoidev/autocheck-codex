@@ -32,6 +32,10 @@ jobs:
           RAILGUN_BASE_URL: ${{ secrets.RAILGUN_BASE_URL }}
           RAILGUN_TOKEN: ${{ secrets.RAILGUN_TOKEN }}
           FNNAS_COOKIE: ${{ secrets.FNNAS_COOKIE }}
+          FNNAS_SIGN_DATA: ${{ secrets.FNNAS_SIGN_DATA }}
+          fn_pvRK_2132_saltkey: ${{ secrets.fn_pvRK_2132_saltkey }}
+          fn_pvRK_2132_auth: ${{ secrets.fn_pvRK_2132_auth }}
+          fn_pvRK_2132_sign: ${{ secrets.fn_pvRK_2132_sign }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           TG_CHANNEL_ID: ${{ secrets.TG_CHANNEL_ID }}
